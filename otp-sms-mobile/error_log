@@ -1,0 +1,17 @@
+[18-Jul-2022 11:24:32 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:25:52 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:25:52 UTC] PHP Notice:  Undefined offset: 123456 in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 113
+[18-Jul-2022 11:25:58 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:27:42 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:27:42 UTC] PHP Notice:  Undefined index:  in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 113
+[18-Jul-2022 11:27:42 UTC] PHP Notice:  Undefined index:  in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 119
+[18-Jul-2022 11:27:42 UTC] PHP Notice:  Undefined index:  in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 124
+[18-Jul-2022 11:27:53 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:28:04 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:28:04 UTC] PHP Notice:  Undefined offset: 7991846193 in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 113
+[18-Jul-2022 11:28:14 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:28:14 UTC] PHP Notice:  Undefined offset: 7991846193 in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 113
+[18-Jul-2022 11:28:17 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:28:32 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11
+[18-Jul-2022 11:28:32 UTC] PHP Notice:  Undefined offset: 9930447726 in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 113
+[18-Jul-2022 11:28:34 UTC] PHP Warning:  session_set_cookie_params(): Cannot change session cookie parameters when session is active in /home/eastsons/public_html/projects/tutorapp/otp-sms-mobile/otp.php on line 11

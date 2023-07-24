@@ -1,0 +1,471 @@
+<?php
+error_reporting(0);
+ob_start();	
+session_start(); 
+include('include/config.php');
+include("include/functions.php");
+//$db = new MySqlDb;
+
+
+
+	if(isset($_POST['Submit']))
+	{
+		$user_type	=	$_POST['user_type'];
+		$fname	=	$_POST['fname'];
+		$lname	=	$_POST['lname'];
+		$user_name = $_POST['user_name'];
+		$email	=	$_POST['email'];
+		$password	=	$_POST['password'];
+		$mobile	=	$_POST['mobile'];
+		$address	=	$_POST['address'];
+		
+		
+		
+		if($user_type!="" && $fname!="" && $email!="" && $password!="" && $mobile!="")
+		{
+			
+			$check_email = "SELECT * FROM user_info WHERE email = '".$email."' ";
+			$check_email_result = $conn->query($check_email);
+			$email_already_exits = mysqli_num_rows($check_email_result);
+			
+		  if($email_already_exits == 0)	
+		  {
+			  
+			
+			 $sql = "insert into user_info set first_name ='".$fname."', last_name = '".$lname."', adminusername ='".$email."', email = '".$email."', password ='".md5($password)."', mobile ='".$mobile."', address1 ='".$address."', user_type = '".$user_type."', user_roll	= '0'  ";
+			
+			//die();
+			
+			if($res=$conn->query($sql))
+			{
+				
+				//$msg1 = "Record inserted successfully.";
+				
+				
+				 $query = "SELECT * FROM user_info WHERE email	='".$email."' and password ='".md5($password)."' and user_type = '".$user_type."' ";
+		
+		//die();
+		
+					$result = $conn->query($query) or die ("table not found");
+					 $numrows = mysqli_num_rows($result);
+					
+					if($numrows > 0)
+					{
+					  $results = mysqli_fetch_array($result);
+					  $results['adminusername'];
+						$results['password'];
+						$storedPassword = $results['password'];
+						if ( $email==$results['adminusername'] && md5($password) == $results['password'] )
+						{
+						 	$_SESSION['adminusername'] = $_POST['email'];
+							$_SESSION['user_name'] = $_POST['user_name'];
+							
+							 $_SESSION['username'] = $_POST['email'];
+							//$_SESSION['userpass'] = $_POST['userpass'];
+							
+							 $_SESSION['user_type'] = $_POST['user_type'];
+							 $_SESSION['loggedIn_user_id'] = $results['user_id']; 
+							
+							
+							//header("location:admin/welcome.php");
+							
+							 $Last_user_id = mysqli_fetch_array($conn->query("select user_id from user_info order by user_id DESC limit 1"));
+							
+							header("location:upload_user_doc.php?id=".$Last_user_id['user_id']);
+							
+							
+						}
+						else { $msg1="Password not valid !"; }
+						
+					}
+				
+				
+				$msg1="User Registration Successfull!";
+				
+			}
+			else
+			{
+				$msg1 = "Error while trying to inserting the record.";
+			}
+			
+		}
+		else{
+			
+			$msg1 = "This Email Id Already Exists. Please Enter Another Email Id.";
+		}
+			
+		}
+	}
+	
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Study Lab </title>
+   
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="description" content="Study Lab" />
+      <meta name="keywords" content="Study Lab" />
+      <meta name="author" content="Study Lab" />
+      <!-- Favicon icon -->
+
+      <link rel="icon" href="admin/assets/images/favicon.ico" type="image/x-icon">
+      <!-- Google font-->     
+      <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+      <!-- Required Fremwork -->
+      <link rel="stylesheet" type="text/css" href="admin/assets/css/bootstrap/css/bootstrap.min.css">
+      <!-- waves.css -->
+      <link rel="stylesheet" href="admin/assets/pages/waves/css/waves.min.css" type="text/css" media="all">
+      <!-- themify-icons line icon -->
+      <link rel="stylesheet" type="text/css" href="admin/assets/icon/themify-icons/themify-icons.css">
+      <!-- ico font -->
+      <link rel="stylesheet" type="text/css" href="admin/assets/icon/icofont/css/icofont.css">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" type="text/css" href="admin/assets/icon/font-awesome/css/font-awesome.min.css">
+      <!-- Style.css -->
+      <link rel="stylesheet" type="text/css" href="admin/assets/css/style.css">
+	  
+	  
+<script language="javascript" type="text/javascript">
+function validate()
+{
+	
+	if(document.myForm.user_type.value == "Select User Type")
+	{
+		alert("Please select user type.");
+		document.myForm.user_type.focus();
+		return false;
+	}
+	if(document.myForm.fname.value == "")
+	{
+		alert("Please enter first name");
+		document.myForm.fname.focus();
+		return false;
+	}
+	
+	if(document.myForm.lname.value == "")
+	{
+		alert("Please enter last name");
+		document.myForm.lname.focus();
+		return false;
+	}
+	if(document.myForm.user_name.value == "")
+	{
+		alert("Please enter user name");
+		document.myForm.user_name.focus();
+		return false;
+	}
+	if(document.myForm.Civic_Nr.value == "")
+	{
+		alert("Please enter civic nr");
+		document.myForm.Civic_Nr.focus();
+		return false;
+	}
+	
+	if(document.myForm.email.value=="")
+	{
+		alert("Please enter email");
+		document.myForm.email.focus();
+		return false;
+	}
+	
+	
+	 var filter = '{literal}'+/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/+'{/literal}';
+	
+	 var emailIDV = document.getElementById('email');	
+	 
+	 if(emailIDV.value!="" && (emailIDV.value.indexOf("@",0)==-1 || emailIDV.value.indexOf(".",0)==-1))
+    {
+        alert("Email field is not valid")
+        emailIDV.focus();
+        emailIDV.select();
+        return false;
+    }
+	
+	
+	 if(document.loginform.password.value=="")
+	 {
+		alert("Please enter password!")
+		document.loginform.password.focus();
+		return false;
+	}
+	
+	
+	 if(document.loginform.mobile.value=="")
+	 {
+		alert("Please enter mobile No.")
+		document.loginform.mobile.focus();
+		return false;
+	}
+
+	if(document.loginform.address.value=="")
+	{
+		alert("Please enter address")
+		document.loginform.address.focus();
+		return false;
+	}	
+	
+	
+	
+	return true;
+	
+}
+
+
+function User_Type()
+{
+	
+	document.getElementById('user_type').value;
+	//alert(document.getElementById('user_type').value);
+}
+</script>
+	  
+  </head>
+
+  <body themebg-pattern="theme1">
+  <!-- Pre-loader start -->
+  <div class="theme-loader">
+      <div class="loader-track">
+          <div class="preloader-wrapper">
+              <div class="spinner-layer spinner-blue">
+                  <div class="circle-clipper left">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                      <div class="circle"></div>
+                  </div>
+              </div>
+              <div class="spinner-layer spinner-red">
+                  <div class="circle-clipper left">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                      <div class="circle"></div>
+                  </div>
+              </div>
+            
+              <div class="spinner-layer spinner-yellow">
+                  <div class="circle-clipper left">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                      <div class="circle"></div>
+                  </div>
+              </div>
+            
+              <div class="spinner-layer spinner-green">
+                  <div class="circle-clipper left">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                      <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                      <div class="circle"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Pre-loader end -->
+  <section class="login-block">
+        <!-- Container-fluid starts -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                   
+					<form class="md-float-material form-material" name="myForm" method="post" enctype="multipart/form-data" onsubmit="return validate();" >
+                        <div class="text-center">
+                            <img src="admin/assets/images/logo.png" alt="logo.png">
+                        </div>
+                        <div class="auth-box card">
+                            <div class="card-block">
+                                <div class="row m-b-20">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center txt-primary">Sign up</h3>
+                                    </div>
+                                </div>
+								
+								<div class="form-group form-primary">
+								<select name="user_type" id="user_type" class="form-control" autocomplete="off"  >
+								<option value="Select User Type">-- Select User Type --</option>
+								<option value="Admin">Admin</option>
+								<option value="User">User</option>
+								<option value="Agents">Agents</option>
+								<option value="Manufacturing Units">Manufacturing Units</option>
+								</select>	
+								</div>
+								 <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <input type="text" name="fname" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">First Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <input type="text" name="lname" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Last Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary">
+                                    <input type="text" name="mobile" class="form-control" required=""  autocomplete="off">
+									
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">Phone No.</label>
+                                </div>
+                                <div class="form-group form-primary">
+                                    <input type="text" name="email" class="form-control" required="">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">Your Email Address</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <input type="password" name="password" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <input type="password" name="confirm_password" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Confirm Password</label>
+                                        </div>
+                                    </div>
+                                </div>
+								
+								 <div class="form-group form-primary">
+                                    <textarea name="address" class="form-control" required=""  autocomplete="off"></textarea>
+									
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">Address</label>
+                                </div>
+                              <!--  <div class="row m-t-25 text-left">
+                                    <div class="col-md-12">
+                                            <label>                                       
+											<div class="checkbox-fade fade-in-primary">
+
+											<input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                                <span class="text-inverse">I read and accept <a href="#">Terms &amp; Conditions.</a></span>
+                                            </label>
+</div>                                                
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="checkbox-fade fade-in-primary">
+                                            <label>
+                                                <input type="checkbox" value="">
+                                                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                                <span class="text-inverse">Send me the <a href="#!">Newsletter</a> weekly.</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="row m-t-30">
+                                    <div class="col-md-12">
+                                        <button type="submit" name="Submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign up now</button>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <p class="text-inverse text-left m-b-0">Thank you.</p>
+                                        <p class="text-inverse text-left"><a href="index.php"><b>Back to website</b></a></p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img src="admin/assets/images/logo.png" alt="small-logo.png" style="width:100px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- end of col-sm-12 -->
+            </div>
+            <!-- end of row -->
+        </div>
+        <!-- end of container-fluid -->
+    </section>
+    <!-- Warning Section Starts -->
+    <!-- Older IE warning message -->
+    <!--[if lt IE 10]>
+<div class="ie-warning">
+    <h1>Warning!!</h1>
+    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+    <div class="iew-container">
+        <ul class="iew-download">
+            <li>
+                <a href="http://www.google.com/chrome/">
+                    <img src="admin/assets/images/browser/chrome.png" alt="Chrome">
+                    <div>Chrome</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.mozilla.org/en-US/firefox/new/">
+                    <img src="admin/assets/images/browser/firefox.png" alt="Firefox">
+                    <div>Firefox</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.opera.com">
+                    <img src="admin/assets/images/browser/opera.png" alt="Opera">
+                    <div>Opera</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.apple.com/safari/">
+                    <img src="admin/assets/images/browser/safari.png" alt="Safari">
+                    <div>Safari</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                    <img src="admin/assets/images/browser/ie.png" alt="">
+                    <div>IE (9 & above)</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <p>Sorry for the inconvenience!</p>
+</div>
+<![endif]-->
+<!-- Warning Section Ends -->
+<!-- Required Jquery -->
+    <script type="text/javascript" src="admin/assets/js/jquery/jquery.min.js"></script>    
+	<script type="text/javascript" src="admin/assets/js/jquery-ui/jquery-ui.min.js "></script>   
+	<script type="text/javascript" src="admin/assets/js/popper.js/popper.min.js"></script>   
+	<script type="text/javascript" src="admin/assets/js/bootstrap/js/bootstrap.min.js "></script>
+<!-- waves js -->
+<script src="admin/assets/pages/waves/js/waves.min.js"></script>
+<!-- jquery slimscroll js -->
+<script type="text/javascript" src="admin/assets/js/jquery-slimscroll/jquery.slimscroll.js "></script>
+<!-- modernizr js -->
+    <script type="text/javascript" src="admin/assets/js/SmoothScroll.js"></script>   
+	<script src="admin/assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
+<!-- i18next.min.js -->
+<script type="text/javascript" src="admin/bower_components/i18next/js/i18next.min.js"></script>
+<script type="text/javascript" src="admin/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js"></script>
+<script type="text/javascript" src="admin/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js"></script>
+<script type="text/javascript" src="admin/bower_components/jquery-i18next/js/jquery-i18next.min.js"></script>
+<script type="text/javascript" src="admin/assets/js/common-pages.js"></script>
+</body>
+
+</html>

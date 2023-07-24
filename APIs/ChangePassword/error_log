@@ -1,0 +1,4 @@
+[14-Dec-2021 08:06:40 UTC] PHP Notice:  Undefined index: id in /home/eastsons/public_html/projects/hidetrade/APIs/ChangePassword/ChangePassword.php on line 11
+[14-Dec-2021 08:06:40 UTC] PHP Notice:  Undefined index: oldpassword in /home/eastsons/public_html/projects/hidetrade/APIs/ChangePassword/ChangePassword.php on line 15
+[14-Dec-2021 08:06:40 UTC] PHP Notice:  Undefined index: newpassword in /home/eastsons/public_html/projects/hidetrade/APIs/ChangePassword/ChangePassword.php on line 16
+[06-Sep-2022 14:34:40 UTC] PHP Notice:  Undefined index: id in /home/eastsons/public_html/projects/tutorapp/APIs/ChangePassword/ChangePassword.php on line 11
